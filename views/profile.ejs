@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/profile.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="navigation">
+                <li><a href="/">Home</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+                <% if (session && session.loggedIn) { %>
+                    <li><a href="/logout">Logout</a></li>
+                <% } %>
+                <% if (session && session.loggedIn) { %>
+                    <li><a href="/profile/<%= session.username %>">Profile</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+    <form action="/changeAnswers" method="POST">
+        <div>
+            <label>Username: <%= session.username %></label>
+            <input type="text" id="username" name="username" disabled>
+        </div>
+        <div>
+            <label>Password: .......</label>
+            <input type="password" id="password" name="password" disabled>
+        </div>
+        <div>
+            <label>Email: <%= session.email %></label>
+            <input type="text" id="email" name="email" disabled></input>
+        </div>
+        <div>
+            <label>Age: <%= session.age %></label>
+            <input type="number" id="age" name="age" disabled></input>
+        </div>
+        <%const questions = [
+            {question: "Which do you prefer?", options: ["Pancakes", "Waffles", "French toast"]},
+            {question: "Which web based language do you prefer to work with?", options: ["Html", "Javascript", "CSS"]},
+            {question: "What is your favorite ice cream?", options: ["Chocolate", "Vanilla", "Strawberry"]}
+        ]; %>
+        <%questions.forEach((question, index) => {%>
+            <label><%=question.question%></label><br>
+            <%question.options.forEach(option => {%>
+                <br>
+                <input type="radio" id="question<%=index%>_<%=option%>" name="question<%=index + 1%>" value="<%=option%>" checked disabled>
+                <label for="question<%=index%>_<%=option%>"><%=option%></label>
+                <br>
+            <%}); %>
+            <br>
+        <%}); %>
+        <button type="button" id="editProfile" style="display: block;">Edit Profile</button>
+        <button id="submitProfile" type="submit" style="display: none;">Submit</button>
+    </form>
+</body>
+<script>
+    document.getElementById('editProfile').addEventListener('click', () => {
+        const radios = document.querySelectorAll('input[type="radio"]');
+        const textInputs = document.querySelectorAll('input[type="text"]');
+        const numberInput = document.querySelectorAll('input[type="number"]');
+        const passwordInput = document.querySelectorAll('input[type="password"]');
+        radios.forEach(radio => {
+            radio.disabled = false;
+        });
+        textInputs.forEach(textInput => {
+            textInput.disabled = false;
+        });
+        numberInput.forEach(numberInp => {
+            numberInp.disabled = false;
+        });
+        passwordInput.forEach(passwordInp => {
+            passwordInp.disabled = false;
+        })
+        document.getElementById('editProfile').style.display = 'none';
+        document.getElementById('submitProfile').style.display = 'block';
+    });
+    if (session && session.username === user.username) { 
+            document.getElementById('editProfile').addEventListener('click', () => {
+                const radios = document.querySelectorAll('input[type="radio"]');
+                const textInputs = document.querySelectorAll('input[type="text"]');
+                const numberInputs = document.querySelectorAll('input[type="number"]');
+                const passwordInputs = document.querySelectorAll('input[type="password"]');
+                radios.forEach(radio => {
+                    radio.disabled = false;
+                });
+                textInputs.forEach(textInput => {
+                    textInput.disabled = false;
+                });
+                numberInputs.forEach(numberInput => {
+                    numberInput.disabled = false;
+                });
+                passwordInputs.forEach(passwordInput => {
+                    passwordInput.disabled = false;
+                });
+                document.getElementById('editProfile').style.display = 'none';
+                document.getElementById('submitProfile').style.display = 'block';
+            });
+        }
+</script>
+</html>

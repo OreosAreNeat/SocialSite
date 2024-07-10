@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="navigation">
+                <li><a href="/">Home</a></li>
+                <% if (!session && !session.loggedIn) { %>
+                    <li><a href="/login">Login</a></li>
+                <% } %>
+                <li><a href="/register">Register</a></li>
+                <li><a href="/api/stats">API Stats</a></li>
+                <% if (session && session.loggedIn) { %>
+                    <li><a href="/logout">Logout</a></li>
+                <% } %>
+                <% if (session && session.loggedIn) { %>
+                    <li><a href="/profile/<%= session.username %>">Profile</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+</body>
+</html>

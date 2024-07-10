@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/register.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="navigation">
+                <li><a href="/">Home</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+                <% if (session && session.loggedIn) { %>
+                    <li><a href="/logout">Logout</a></li>
+                <% } %>
+                <% if (session && session.loggedIn) { %>
+                    <li><a href="/profile/<%= session.username %>">Profile</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+    <form action="/register" method="POST">
+        <div>
+            <label>Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="text" id="password" name="password" required></input>
+        </div>
+        <div>
+            <label>Email:</label>
+            <input type="text" id="email" name="email" required></input>
+        </div>
+        <div>
+            <label>Age:</label>
+            <input type="number" id="age" name="age" required></input>
+        </div>
+        <%const questions = [
+            {question: "Which do you prefer?", options: ["Pancakes", "Waffles", "French toast"]},
+            {question: "Which web based language do you prefer to work with?", options: ["Html", "Javascript", "CSS"]},
+            {question: "What is your favorite ice cream?", options: ["Chocolate", "Vanilla", "Strawberry"]}
+        ]; %>
+        <%questions.forEach((question, index) => {%>
+            <label><%=question.question%></label><br>
+            <%question.options.forEach(option => {%>
+                <br>
+                <input type="radio" id="question<%=index%>_<%=option%>" name="question<%=index + 1%>" value="<%=option%>">
+                <label for="question<%=index%>_<%=option%>"><%=option%></label>
+                <br>
+            <%}); %>
+            <br>
+        <%}); %>
+        <button type="submit">Register</button>
+    </form>
+    
+</body>
+</html>
